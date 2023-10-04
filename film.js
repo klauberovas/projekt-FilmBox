@@ -130,3 +130,35 @@ Premiéra <strong>${dayjs(hledanyFilm.premiera).format(
   'D.M.YYYY',
 )}</strong>, což bylo před ${now.diff(premiereDate, 'days')}
 dní.</small>`;
+
+//Bonus: hodnocení
+const hvezdicky = detailFilmuElm.querySelectorAll('.fa-star');
+let ulozenePoradi = 0;
+
+const assessment = (number) => {
+  if (number >= 1 && number <= 5) {
+    hvezdicky.forEach((hvezdicka, index) => {
+      if (index < number) {
+        hvezdicka.classList.remove('far'), hvezdicka.classList.add('fas');
+      } else {
+        hvezdicka.classList.remove('fas');
+        hvezdicka.classList.add('far');
+      }
+    });
+  }
+};
+hvezdicky.forEach((hvezdicka, index) => {
+  hvezdicka.addEventListener('click', () => {
+    ulozenePoradi = index + 1;
+    assessment(ulozenePoradi);
+  });
+
+  hvezdicka.addEventListener('mouseenter', () => {
+    const poradi = index + 1;
+    assessment(poradi);
+  });
+
+  hvezdicka.addEventListener('mouseleave', () => {
+    assessment(ulozenePoradi);
+  });
+});
